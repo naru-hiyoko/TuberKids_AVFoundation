@@ -76,17 +76,13 @@ class SeekBar : NSSlider
         
     override func mouseMoved(with theEvent: NSEvent) {
 
-        guard let _generator = self.generator else { return }
+//        guard let _generator = self.generator else { return }
         let x = (theEvent.locationInWindow.x - self.frame.minX) / self.frame.width
         let t = (self.delegate!.rangeIndicaterView.maxValueAorB - self.delegate!.rangeIndicaterView.minValueAorB) * CGFloat(x) + self.delegate!.rangeIndicaterView.minValueAorB
         let time = CMTimeMakeWithSeconds(Double(t), 600)
-        do {
-//            let image = try _generator.copyCGImage(at: time, actualTime: nil)
-            self.thumbnail?.frame = CGRect(x: theEvent.locationInWindow.x, y: theEvent.locationInWindow.y, width: 120, height: 80)
-//            self.thumbnail?.contents = image
-        } catch let e {
-            Swift.print(e)
-        }
+        self.thumbnail?.frame = CGRect(x: theEvent.locationInWindow.x, y: theEvent.locationInWindow.y, width: 120, height: 80)
+
+
         
         let text = String(NSString.init(format: "%0.2f(s)", time.seconds))
         self.textLayer?.string = text

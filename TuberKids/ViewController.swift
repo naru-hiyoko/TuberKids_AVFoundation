@@ -18,7 +18,6 @@ class ViewController: NSViewController
 {
     let video_editer : VideoEditController = VideoEditController()
     
-    @IBOutlet weak var dropFieldView : DropFieldView!
     @IBOutlet weak var preview : AVPrevView!
     @IBOutlet weak var itemView : ItemTableView!
     @IBOutlet weak var itemViewScroll : NSScrollView!    
@@ -59,8 +58,9 @@ class ViewController: NSViewController
         self.view.acceptsTouchEvents = true
         self.view.wantsLayer = true
         
+        self.itemView.editor = self.video_editer
+        self.itemView.controler = self
         
-        self.dropFieldView.delegate = self
         self.rangeIndicaterView.delegate = self
         self.seekBar.delegate = self
         self.view.layer?.addSublayer(self.seekBar.thumbnail!)
@@ -78,6 +78,7 @@ class ViewController: NSViewController
         
         guard let _asset = asset else { return }
         
+
         let item = AVPlayerItem(asset: _asset)
         self.preview.avPlayer = AVPlayer(playerItem: item)
         self.preview.videoLayer = AVPlayerLayer(player: self.preview.avPlayer)
@@ -322,9 +323,8 @@ class ViewController: NSViewController
         } else {
             let url = panel.url!
             self.video_editer.deleteData()
-            if !self.video_editer.load(url) {
-                return
-            }
+            if !self.video_editer.load([url]) { return }
+            self.preview.removeAllEffect()
             self.setupPreview(self.video_editer.composition!)
         }
         

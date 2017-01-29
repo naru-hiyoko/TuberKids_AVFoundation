@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4305F97A1E3AD5470007BB3B /* PushEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4305F9791E3AD5470007BB3B /* PushEffect.swift */; };
 		4312BA281E3A285300586FF2 /* SaveCurrentEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4312BA271E3A285300586FF2 /* SaveCurrentEffect.swift */; };
 		4316B8411DEDE1E100CFFDFB /* Funk.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 4316B8401DEDE1E100CFFDFB /* Funk.aiff */; };
 		4349756A1DEC870F00898A03 /* noSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 434975691DEC870F00898A03 /* noSound.mp3 */; };
@@ -15,8 +16,7 @@
 		43B540381DD1570B0078EA6D /* SeekBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B540371DD1570B0078EA6D /* SeekBar.swift */; };
 		43B707F21DD22D41003B6580 /* ViewControllerB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B707F11DD22D41003B6580 /* ViewControllerB.swift */; };
 		43B707F41DD23B08003B6580 /* ViewControllerC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B707F31DD23B08003B6580 /* ViewControllerC.swift */; };
-		43B707F61DD241DA003B6580 /* ViewControllerA_EX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B707F51DD241DA003B6580 /* ViewControllerA_EX.swift */; };
-		43CC1C141DB3A49D005A68F9 /* DropFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CC1C131DB3A49D005A68F9 /* DropFieldView.swift */; };
+		43B707F61DD241DA003B6580 /* ViewControllerEXButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B707F51DD241DA003B6580 /* ViewControllerEXButton.swift */; };
 		43D4DC0F1DC74B2F00F75171 /* RangeIndicaterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D4DC0E1DC74B2F00F75171 /* RangeIndicaterView.swift */; };
 		43DF84291DCC133000579EBB /* EffectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DF84281DCC133000579EBB /* EffectData.swift */; };
 		43E4FFE71DB9DBFE00FA1F51 /* ItemTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E4FFE61DB9DBFE00FA1F51 /* ItemTableView.swift */; };
@@ -27,7 +27,7 @@
 		43EDD93D1DAF1A42009959F3 /* TuberKidsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EDD93C1DAF1A42009959F3 /* TuberKidsTests.swift */; };
 		43EDD9481DAF1A42009959F3 /* TuberKidsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EDD9471DAF1A42009959F3 /* TuberKidsUITests.swift */; };
 		43F57A751DC9EC2E000CCF8C /* textImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F57A741DC9EC2E000CCF8C /* textImage.swift */; };
-		43F6BC291DD2ED00004182FA /* AVPrevViewEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F6BC281DD2ED00004182FA /* AVPrevViewEX.swift */; };
+		43F6BC291DD2ED00004182FA /* AVPrevViewAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F6BC281DD2ED00004182FA /* AVPrevViewAnimations.swift */; };
 		43F6BC2B1DD2F019004182FA /* VideoEditControllerEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F6BC2A1DD2F019004182FA /* VideoEditControllerEX.swift */; };
 		43F6C96C1DB4747D00F45013 /* VideoEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F6C96B1DB4747D00F45013 /* VideoEditController.swift */; };
 		43F6C96E1DB475E600F45013 /* AVPrevView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F6C96D1DB475E600F45013 /* AVPrevView.swift */; };
@@ -51,6 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4305F9791E3AD5470007BB3B /* PushEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushEffect.swift; sourceTree = "<group>"; };
 		4312BA271E3A285300586FF2 /* SaveCurrentEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveCurrentEffect.swift; sourceTree = "<group>"; };
 		4316B8401DEDE1E100CFFDFB /* Funk.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Funk.aiff; sourceTree = "<group>"; };
 		434975691DEC870F00898A03 /* noSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = noSound.mp3; sourceTree = "<group>"; };
@@ -59,8 +60,7 @@
 		43B540371DD1570B0078EA6D /* SeekBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeekBar.swift; sourceTree = "<group>"; };
 		43B707F11DD22D41003B6580 /* ViewControllerB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerB.swift; sourceTree = "<group>"; };
 		43B707F31DD23B08003B6580 /* ViewControllerC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerC.swift; sourceTree = "<group>"; };
-		43B707F51DD241DA003B6580 /* ViewControllerA_EX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerA_EX.swift; sourceTree = "<group>"; };
-		43CC1C131DB3A49D005A68F9 /* DropFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropFieldView.swift; sourceTree = "<group>"; };
+		43B707F51DD241DA003B6580 /* ViewControllerEXButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerEXButton.swift; sourceTree = "<group>"; };
 		43D4DC0E1DC74B2F00F75171 /* RangeIndicaterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeIndicaterView.swift; sourceTree = "<group>"; };
 		43DF84281DCC133000579EBB /* EffectData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EffectData.swift; sourceTree = "<group>"; };
 		43E4FFE61DB9DBFE00FA1F51 /* ItemTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemTableView.swift; sourceTree = "<group>"; };
@@ -77,7 +77,7 @@
 		43EDD9471DAF1A42009959F3 /* TuberKidsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TuberKidsUITests.swift; sourceTree = "<group>"; };
 		43EDD9491DAF1A42009959F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		43F57A741DC9EC2E000CCF8C /* textImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = textImage.swift; sourceTree = "<group>"; };
-		43F6BC281DD2ED00004182FA /* AVPrevViewEX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVPrevViewEX.swift; sourceTree = "<group>"; };
+		43F6BC281DD2ED00004182FA /* AVPrevViewAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVPrevViewAnimations.swift; sourceTree = "<group>"; };
 		43F6BC2A1DD2F019004182FA /* VideoEditControllerEX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoEditControllerEX.swift; sourceTree = "<group>"; };
 		43F6C96B1DB4747D00F45013 /* VideoEditController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoEditController.swift; sourceTree = "<group>"; };
 		43F6C96D1DB475E600F45013 /* AVPrevView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVPrevView.swift; sourceTree = "<group>"; };
@@ -114,7 +114,7 @@
 				43EDD92C1DAF1A41009959F3 /* ViewController.swift */,
 				435D0D5E1E1E27E300A9B4E3 /* ViewControllerEX.swift */,
 				435D0D601E1E74DC00A9B4E3 /* ViewControllerOperation.swift */,
-				43B707F51DD241DA003B6580 /* ViewControllerA_EX.swift */,
+				43B707F51DD241DA003B6580 /* ViewControllerEXButton.swift */,
 				43B707F11DD22D41003B6580 /* ViewControllerB.swift */,
 				43B707F31DD23B08003B6580 /* ViewControllerC.swift */,
 			);
@@ -134,7 +134,8 @@
 			isa = PBXGroup;
 			children = (
 				43F6C96D1DB475E600F45013 /* AVPrevView.swift */,
-				43F6BC281DD2ED00004182FA /* AVPrevViewEX.swift */,
+				4305F9791E3AD5470007BB3B /* PushEffect.swift */,
+				43F6BC281DD2ED00004182FA /* AVPrevViewAnimations.swift */,
 			);
 			name = AVPreview;
 			sourceTree = "<group>";
@@ -168,7 +169,6 @@
 				43D4DC0E1DC74B2F00F75171 /* RangeIndicaterView.swift */,
 				43DF84281DCC133000579EBB /* EffectData.swift */,
 				43E4FFE61DB9DBFE00FA1F51 /* ItemTableView.swift */,
-				43CC1C131DB3A49D005A68F9 /* DropFieldView.swift */,
 				4312BA271E3A285300586FF2 /* SaveCurrentEffect.swift */,
 				435D0D5D1E1E21DE00A9B4E3 /* AVPreview */,
 				435D0D5C1E1E21C300A9B4E3 /* VideoEditor */,
@@ -335,7 +335,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43CC1C141DB3A49D005A68F9 /* DropFieldView.swift in Sources */,
 				43F6C96E1DB475E600F45013 /* AVPrevView.swift in Sources */,
 				43B540381DD1570B0078EA6D /* SeekBar.swift in Sources */,
 				43F57A751DC9EC2E000CCF8C /* textImage.swift in Sources */,
@@ -343,6 +342,7 @@
 				43DF84291DCC133000579EBB /* EffectData.swift in Sources */,
 				43B707F41DD23B08003B6580 /* ViewControllerC.swift in Sources */,
 				43F6BC2B1DD2F019004182FA /* VideoEditControllerEX.swift in Sources */,
+				4305F97A1E3AD5470007BB3B /* PushEffect.swift in Sources */,
 				43D4DC0F1DC74B2F00F75171 /* RangeIndicaterView.swift in Sources */,
 				43F6C96C1DB4747D00F45013 /* VideoEditController.swift in Sources */,
 				43E4FFE71DB9DBFE00FA1F51 /* ItemTableView.swift in Sources */,
@@ -350,9 +350,9 @@
 				43EDD92B1DAF1A41009959F3 /* AppDelegate.swift in Sources */,
 				43B707F21DD22D41003B6580 /* ViewControllerB.swift in Sources */,
 				435D0D5F1E1E27E300A9B4E3 /* ViewControllerEX.swift in Sources */,
-				43B707F61DD241DA003B6580 /* ViewControllerA_EX.swift in Sources */,
+				43B707F61DD241DA003B6580 /* ViewControllerEXButton.swift in Sources */,
 				435D0D611E1E74DC00A9B4E3 /* ViewControllerOperation.swift in Sources */,
-				43F6BC291DD2ED00004182FA /* AVPrevViewEX.swift in Sources */,
+				43F6BC291DD2ED00004182FA /* AVPrevViewAnimations.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
