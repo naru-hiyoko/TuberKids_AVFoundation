@@ -14,7 +14,8 @@ import Cocoa
 
 class SaveCurrentEffect : NSObject
 {
-    let tmp = URL.init(string: "/Volumes/ramdisk/tmp")!
+    let tmp = URL.init(fileURLWithPath: "/Volumes/ramdisk/tmp")
+    
     override init() {
         super.init()
         do {
@@ -26,11 +27,97 @@ class SaveCurrentEffect : NSObject
         }
     }
     
-    func prepare(_ source: URL, effects: [EffectData])
+    func saveState(_ source: URL, effects: [EffectData])
     {
         print("original file : \(source.path)")
         
+        let panel = NSOpenPanel.init()
+        panel.allowsMultipleSelection = false
+        panel.canChooseDirectories = true
+        panel.canChooseFiles = false
+        panel.message = "保存先のディレクトリを選んでください"
+        switch panel.runModal() {
+        case NSModalResponseOK:
+            print("ok")
+        case NSModalResponseCancel:
+            print("cancel")
+            return
+        default:
+            return
+        }
         
+        for (i, effect) in effects.enumerated()
+        {
+            print("item \(i) : \(effect.url!.path)")
+            
+            let data = NSKeyedArchiver.archivedData(withRootObject: effect)
+            let s = URL.init(string: "item_\(i)", relativeTo: self.tmp)
+            do {
+                if FileManager.default.fileExists(atPath: s!.path) {
+                    try FileManager.default.removeItem(at: s!)
+                }
+            } catch let e {
+                let al = NSAlert.init(error: e)
+                al.runModal()
+            }
+
+            do {
+                try data.write(to: s!)
+            } catch let e {
+                let al = NSAlert.init(error: e)
+                al.runModal()
+            }
+        }
+        
+
+    }
+    
+    func loadState(preview : AVPrevView, editer : VideoEditController)
+    {
+        do {
+            let files = try FileManager.default.contentsOfDirectory(atPath: self.tmp.path)
+            for file in files {
+                if file.contains("item")
+                {
+                    self.loadItem(file, preview: preview, editer: editer)
+                }
+            }
+        } catch let err {
+            let al = NSAlert.init(error: err)
+            al.runModal()
+        }
+        
+    }  
+    
+    private func loadItem(_ name : String, preview: AVPrevView, editer: VideoEditController)
+    {
+        let dataUrl = URL.init(string: name, relativeTo: self.tmp)
+        let data = try! Data.init(contentsOf: dataUrl!)
+        let effect = NSKeyedUnarchiver.unarchiveObject(with: data) as! EffectData
+        let timeRange : CMTimeRange = effect.timeRange 
+        let fSize : CGRect = effect.normalizedFrame!
+        
+        switch effect.type! {
+        case AVMediaTypeImage:
+            preview.pushImageEffect(resourcePath: effect.url!, duration: timeRange, region: fSize, options: effect.options)
+            break
+        case AVMediaTypeText:
+            let text = effect.options!["text"] as! String
+            preview.pushTextEffect(text: text, resourcePath: effect.url!, duration: timeRange, region: fSize, options: effect.options)
+            break
+        case AVMediaTypeAudio:
+            let mute = effect.options!["mute"] as! Bool
+            let volume = effect.options!["volume"] as! Float
+            let trackId = editer.insertAudioEffect(resourcePath: effect.url!, duration: effect.timeRange, mute: mute, volume: volume)!
+            preview.pushAudioEffect(resourcePath: effect.url!, duration: effect.timeRange,
+                                    region: effect.normalizedFrame, trackId: trackId, options: effect.options)
+            break
+            
+        default:
+            let al = NSAlert.init()
+            al.messageText = "Not supported"
+            al.runModal()
+        }
 
     }
         

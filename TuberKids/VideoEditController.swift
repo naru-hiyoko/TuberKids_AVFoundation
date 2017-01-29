@@ -16,9 +16,7 @@ protocol VideoEditControllerProtocol {
     var sourceAsset : AVAsset? { get }
     
     var composition : AVMutableComposition? { get set }
-    
-    var resources : [URL]! { get set } 
-    
+
 }
 
 class VideoEditController : NSObject, VideoEditControllerProtocol
@@ -47,56 +45,62 @@ class VideoEditController : NSObject, VideoEditControllerProtocol
     }
 
     
-    func load(_ url : URL) -> Bool
+    func loadSourceFile(_ url : URL) 
     {
-        if self.sourceURL == nil 
+        var arr :[Bool] = []
+        for s in ["mov", "mp4"] {
+            if url.pathExtension.lowercased().contains(s) {
+                arr.append(true)
+            } else {
+                arr.append(false)
+            }
+        }
+        if !arr.contains(true) {
+            return
+        }
+
+        
+        self.sourceURL = url
+        let vTrack : AVMutableCompositionTrack = self.composition!.addMutableTrack(withMediaType: AVMediaTypeVideo, preferredTrackID: 0xAA)
+        let svTrack = self.sourceAsset!.tracks(withMediaType: AVMediaTypeVideo)[0]
+        try! vTrack.insertTimeRange(svTrack.timeRange, of: svTrack, at: kCMTimeZero)
+        
+        let aTrack = self.composition!.addMutableTrack(withMediaType: AVMediaTypeAudio, preferredTrackID: 0xAB)
+        aTrack.preferredVolume = 1.0
+        
+        if self.sourceAsset!.tracks(withMediaType: AVMediaTypeAudio).count == 0 
         {
-            Swift.print("Source Video file loading.")
-            if url.pathExtension == "MOV" || url.pathExtension == "mp4" || url.pathExtension == "mov"
-            {
-                
-            } else {
-                let alert = NSAlert()
-                alert.messageText = "動画ファイルを選択してください"
-                alert.alertStyle = NSAlertStyle.warning
-                alert.runModal()
-                return false
-            }
+            // audio track がない場合
+            let path = Bundle.main.path(forSoundResource: "noSound.mp3")
+            let url = NSURL(fileURLWithPath: path!) as URL
+            let saTrack = AVAsset(url: url).tracks(withMediaType: AVMediaTypeAudio)[0]
+            try! aTrack.insertTimeRange(saTrack.timeRange, of: saTrack, at: kCMTimeZero)
+            // ビデオの再生時間分の長さを確保する
+            let duration = CMTimeMakeWithSeconds(floor(vTrack.timeRange.end.seconds - aTrack.timeRange.end.seconds), 600)
+            try! aTrack.insertEmptyTimeRange(CMTimeRangeMake(kCMTimeZero, duration))
             
-            self.sourceURL = url
-            let vTrack : AVMutableCompositionTrack = self.composition!.addMutableTrack(withMediaType: AVMediaTypeVideo, preferredTrackID: 0xAA)
-            let svTrack = self.sourceAsset!.tracks(withMediaType: AVMediaTypeVideo)[0]
-            try! vTrack.insertTimeRange(svTrack.timeRange, of: svTrack, at: kCMTimeZero)
-            
-            let aTrack = self.composition!.addMutableTrack(withMediaType: AVMediaTypeAudio, preferredTrackID: 0xAB)
-            
-
-            if self.sourceAsset!.tracks(withMediaType: AVMediaTypeAudio).count == 0 
-            {
-                let path = Bundle.main.path(forSoundResource: "noSound.mp3")
-                let url = NSURL(fileURLWithPath: path!) as URL
-                let saTrack = AVAsset(url: url).tracks(withMediaType: AVMediaTypeAudio)[0]
-                try! aTrack.insertTimeRange(saTrack.timeRange, of: saTrack, at: kCMTimeZero)
-
-                let duration = CMTimeMakeWithSeconds(floor(vTrack.timeRange.end.seconds - aTrack.timeRange.end.seconds), 600)
-                try! aTrack.insertEmptyTimeRange(CMTimeRangeMake(kCMTimeZero, duration))
-
-            } else {
-                let saTrack = self.sourceAsset!.tracks(withMediaType: AVMediaTypeAudio)[0]                  
-                try! aTrack.insertTimeRange(saTrack.timeRange, of: saTrack, at: kCMTimeZero)                
-            }
-
-            
-//            print(self.sourceAsset!.tracks)
-            print(vTrack.naturalTimeScale)
-            aTrack.preferredVolume = 1.0
         } else {
-            print(url.path)
-
-            self.resources.append(url)
+            let saTrack = self.sourceAsset!.tracks(withMediaType: AVMediaTypeAudio)[0]                  
+            try! aTrack.insertTimeRange(saTrack.timeRange, of: saTrack, at: kCMTimeZero)                
         }
         
-        return true
+        return 
+    }
+    
+    func load(_ files : [URL]) -> Bool
+    {
+        for url in files {
+            if self.sourceURL == nil 
+            {
+                self.loadSourceFile(url) 
+                
+            } else {
+                print(url.path)
+//                self.resources.append(url)
+            }
+        }
+        return true        
+
     }
     
     func deleteData()
@@ -106,30 +110,7 @@ class VideoEditController : NSObject, VideoEditControllerProtocol
         self.composition = AVMutableComposition()
     }
     
-    /*
-    func cut<T>(start : T, end : T)
-    {
-        let st = CMTimeMakeWithSeconds(start as! Float64, 600)
-        let duration = CMTimeMakeWithSeconds((end as! Float64) - (start as! Float64), 600)
-        self.composition?.removeTimeRange(CMTimeRangeMake(st, duration))
-    }
-        */
-    
-    func insertEffect<T>(resourcePath path : URL, time : T)
-    {
 
-        switch path.pathExtension {
-        case "mp3" :
-            Swift.print("insert audio.")
-            insertAudioEffect(resourcePath: path, atTime: time as! CMTime)
-        case "png" :
-            Swift.print("insert image.")            
-            insertImageEffect(resourcePath: path, duration: time as! CMTimeRange)
-        default:
-            return
-        }
-    }
-    
     func insertAudioEffect(resourcePath path : URL, atTime time : CMTime, volume : Float = 1.0) -> CMPersistentTrackID
     {
         

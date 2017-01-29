@@ -25,14 +25,15 @@ extension ViewController
         })
     }
     
-    func itemDropped(items : [NSURL])
+    
+    func syncItems(_ items : [URL])
     {
-        if !self.video_editer.load(items.last! as URL) { return }
-        if self.video_editer.resources.count == 0 {
+        if self.video_editer.resources.count == 0
+        {
             self.setupPreview(self.video_editer.composition!)
+        } else {
+            
         }
-        self.itemView.items = self.video_editer.resources
-        self.itemView.reloadData()
     }
     
     func itemDropped(row : Int)
@@ -64,8 +65,12 @@ extension ViewController
             } else {
                 trackId = self.video_editer.insertAudioEffect(resourcePath: path, atTime: duration.start, volume: volume)                    
             }
-            
-            self.preview.pushAudioEffect(resourcePath: path, duration: duration, region: self.preview.normalizedSelectedRegion, trackId: trackId!)
+            var options : Dictionary<String, AnyObject> = [:]
+            options["mute"] = muteState as AnyObject
+            options["restricted"] = self.restrict_button.state as AnyObject
+            options["volume"] = volume as AnyObject
+            self.preview.pushAudioEffect(resourcePath: path, duration: duration,
+                                         region: self.preview.normalizedSelectedRegion, trackId: trackId!, options: options)
             self.setupPreview(self.video_editer.composition!)
             let tolerance = CMTimeMakeWithSeconds(0.0001, 600)
             self.preview.avPlayer?.seek(to: duration.start, toleranceBefore: tolerance, toleranceAfter: tolerance)
@@ -84,13 +89,13 @@ extension ViewController
             
             if text != "" {
                 guard let selectedRegionAspect = self.preview.selectedRegionAspect else { return }
-                
+                options["text"] = text as AnyObject
                 options["isVertical"] = (selectedRegionAspect > 2.0 ? true : false) as AnyObject
                 options["font"] = NSFontManager.shared().selectedFont
                 self.preview.pushTextEffect(text: text, resourcePath: path, duration: duration, region: self.preview.normalizedSelectedRegion, options: options)
             } else {
                 // 画像の差し込み
-                self.preview.pushEffect(resourcePath: path, duration: duration, region: self.preview.normalizedSelectedRegion, options: options)
+                self.preview.pushImageEffect(resourcePath: path, duration: duration, region: self.preview.normalizedSelectedRegion, options: options)
             }
             
             self.preview.updateVisibleState(seconds: duration.start.seconds)

@@ -54,12 +54,12 @@ class AVPrevView : NSImageView, AVPrevViewProtocol
     var videoLayer : AVPlayerLayer? = nil
     var isPlaying : Bool = false
     
-    fileprivate var selectedRigion: CALayer? = CALayer()
-    fileprivate var mouseDownPosition : CGPoint?
-    fileprivate var mouseUpPosition : CGPoint?
+    var selectedRigion: CALayer? = CALayer()
+    var mouseDownPosition : CGPoint?
+    var mouseUpPosition : CGPoint?
     
     var effects : [EffectData] = []
-    fileprivate var effectParentLayer : CALayer = CALayer()
+    var effectParentLayer : CALayer = CALayer()
     
     // selected index in effects.
     var selectedEffectIndex : Int? = nil
@@ -67,13 +67,8 @@ class AVPrevView : NSImageView, AVPrevViewProtocol
     // 
     var selectedRegionAspect : CGFloat?
     {
-        guard let width = self.normalizedSelectedRegion?.width else {
-            return nil
-        }
-        
-        guard let height = self.normalizedSelectedRegion?.height else {
-            return nil
-        }
+        guard let width = self.normalizedSelectedRegion?.width else { return nil }
+        guard let height = self.normalizedSelectedRegion?.height else { return nil }
         
         return height / width
     }
@@ -83,18 +78,14 @@ class AVPrevView : NSImageView, AVPrevViewProtocol
         Swift.print(row)
     }
     
+  
     /**
     return of this regions are normalized by frame size itself.
  
     */
     var normalizedSelectedRegion : CGRect? {
-        guard let downPos = self.mouseDownPosition else {
-            return nil
-        } 
-        
-        guard let upPos = self.mouseUpPosition else {
-            return nil
-        }
+        guard let downPos = self.mouseDownPosition else { return nil } 
+        guard let upPos = self.mouseUpPosition else { return nil }
         
         let x = min(downPos.x, upPos.x) / self.frame.width
         let y = min(downPos.y, upPos.y) / self.frame.height
@@ -105,7 +96,7 @@ class AVPrevView : NSImageView, AVPrevViewProtocol
         
     }
     
-    fileprivate func normalizedPoint (point p : CGPoint) -> CGPoint
+    func normalizedPoint (point p : CGPoint) -> CGPoint
     {
         return CGPoint(x: p.x / self.frame.width, y: p.y / self.frame.height)
     }
@@ -167,17 +158,7 @@ class AVPrevView : NSImageView, AVPrevViewProtocol
         return true
     }
     
-    /**
-     calcutate the local position in self frame. 
-     */
-    fileprivate func locationInFrame(locationInWindow pos : NSPoint, inRect rect : NSRect) -> CGPoint
-    {
-        let dx = pos.x - rect.minX
-        let dy = pos.y - rect.minY
-        return CGPoint(x: dx, y: dy)
-    }
-    
-    fileprivate func layerInPosition(locationInView pos : CGPoint) -> Int?
+    func layerInPosition(locationInView pos : CGPoint) -> Int?
     {
         self.selectedEffectIndex = nil
         for (i, datum) in self.effects.enumerated()
@@ -196,7 +177,8 @@ class AVPrevView : NSImageView, AVPrevViewProtocol
     
     override func mouseDown(with theEvent: NSEvent) {
         super.mouseDown(with: theEvent)
-        self.mouseDownPosition = self.locationInFrame(locationInWindow: theEvent.locationInWindow, inRect: self.frame)
+
+        self.mouseDownPosition = self.convert(theEvent.locationInWindow, from: self.superview!)
         self.selectedRigion?.isHidden = true
         self.mouseUpPosition = nil 
         
@@ -206,8 +188,8 @@ class AVPrevView : NSImageView, AVPrevViewProtocol
     
     
     override func mouseUp(with theEvent: NSEvent) {
-        //
-        let pos = self.locationInFrame(locationInWindow: theEvent.locationInWindow, inRect: self.frame)
+
+        let pos = self.convert(theEvent.locationInWindow, from: self.superview!)
         if self.selectedRigion!.contains(pos) {
             self.mouseUpPosition = pos
         } else {
@@ -221,7 +203,6 @@ class AVPrevView : NSImageView, AVPrevViewProtocol
     private func euc(p1 : CGPoint, p2 : CGPoint) -> CGFloat
     {
         let e = sqrt(pow(p1.x - p2.x, 2.0) + pow(p1.y - p2.y, 2.0))
-//        Swift.print(e)
         return e
         
     }
@@ -236,7 +217,8 @@ class AVPrevView : NSImageView, AVPrevViewProtocol
         {
 
             let effect = self.effects[self.selectedEffectIndex!]
-            let p = self.locationInFrame(locationInWindow: theEvent.locationInWindow, inRect: self.frame)
+//            let p = self.locationInFrame(locationInWindow: theEvent.locationInWindow, inRect: self.frame)
+            let p = self.convert(theEvent.locationInWindow, from: self.superview!)
             let np = self.normalizedPoint(point: p)
             
             if euc(p1: np, p2: CGPoint(x: effect.normalizedFrame!.minX, y: effect.normalizedFrame!.minY)) < 0.05
@@ -257,7 +239,7 @@ class AVPrevView : NSImageView, AVPrevViewProtocol
         
         
         self.selectedRigion?.isHidden = false
-        let point = self.locationInFrame(locationInWindow: theEvent.locationInWindow, inRect: self.frame)
+        let point = self.convert(theEvent.locationInWindow, from: self.superview!)
         
         self.selectedRigion?.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
         self.selectedRigion?.opacity = 0.6
@@ -293,99 +275,8 @@ class AVPrevView : NSImageView, AVPrevViewProtocol
 
     }
     
-    /**
-     region must be normalized to 0 ... 1.
-     */
-    func pushEffect(resourcePath path : URL, duration : CMTimeRange, region : CGRect? = nil,
-                                 options : Dictionary<String, AnyObject>?)
-    {
-        
-        
-        let layer = CALayer()
-        layer.contents = NSImage(contentsOf: path)
-        layer.frame = self.getSuitFrameSize(region)
-       
-        let datum : EffectData = EffectData(layer: layer, normalizedFrame: region, timeRange: duration, url: path,
-                                            type: AVMediaTypeImage, trackId: nil, options: options)
-
-        self.effects.append(datum)
-        self.effectParentLayer.addSublayer(layer)
-        
-        self.layer?.insertSublayer(self.effectParentLayer, above: self.videoLayer)
-        self.layer?.insertSublayer(self.selectedRigion!, above: self.effectParentLayer)
-        
-    }
     
-    func pushTextEffect(text : String, resourcePath path : URL, duration : CMTimeRange, region : CGRect? = nil,
-                             options: Dictionary<String, AnyObject>? = nil)
-    {
-        let layer = CALayer()
-
-        var isVertical = false
-        if options != nil {
-            isVertical = options!["isVertical"] as! Bool
-        }
-        
-        let font : NSFont? = options!["font"] as? NSFont
-        
-        if isVertical {
-            let image = textImageVertical(text: text, font: font, texture: path)
-            layer.contents = image!        
-        } else {
-            let image = textImage(text: text, font: font, texture: path)
-            layer.contents = image!        
-        }
-        
-        layer.frame = self.getSuitFrameSize(region)
-        
-        let datum : EffectData = EffectData(layer: layer, normalizedFrame: region, timeRange: duration,
-                                            url: path, type: AVMediaTypeText, trackId: nil, options: options)
-        self.effects.append(datum)
-        self.effectParentLayer.addSublayer(layer)
-        
-        self.layer?.insertSublayer(self.effectParentLayer, above: self.videoLayer)
-        self.layer?.insertSublayer(self.selectedRigion!, above: self.effectParentLayer)
-        self.selectedRigion?.isHidden = true        
-    }
-    
-    func pushAudioEffect(resourcePath path : URL, duration : CMTimeRange, region : CGRect? = nil, trackId : CMPersistentTrackID)
-    {
-        let layer = CALayer()
-        let image = NSImage(named: "sound")
-        layer.contents = image!
-        layer.frame = self.getSuitFrameSize(region)
-        
-        let datum : EffectData = EffectData(layer: layer, normalizedFrame: region, timeRange: duration,
-                                            url: path, type: AVMediaTypeAudio, trackId: trackId, options: nil)
-        self.effects.append(datum)
-        self.effectParentLayer.addSublayer(layer)
-        
-        self.layer?.insertSublayer(self.effectParentLayer, above: self.videoLayer)
-        //self.layer?.insertSublayer(self.selectedRigion!, above: self.effectParentLayer)
-        self.selectedRigion?.isHidden = true
-        
-    }
-    
-    func pushVideoEffect(resourcePath path : URL, timeRange : CMTimeRange, region : CGRect? = nil)
-    {
-        
-        let player = AVPlayer(url: path)
-        let layer = AVPlayerLayer(player: player)
-        layer.frame = self.getSuitFrameSize(region)
-        
-        let options : Dictionary<String, AnyObject> = [
-            "player" : player, 
-        ]
-        
-        let datum = EffectData(layer: layer, normalizedFrame: region, timeRange: timeRange, url: path, type: AVMediaTypeVideo, trackId: nil, options: options)
-        self.effects.append(datum)
-        self.effectParentLayer.addSublayer(layer)
-        self.layer?.insertSublayer(self.effectParentLayer, above: self.videoLayer)        
-        self.selectedRigion?.isHidden = true        
-        
-    }
-    
-    fileprivate func getSuitFrameSize (_ region : CGRect?) -> CGRect
+    func getSuitFrameSize (_ region : CGRect?) -> CGRect
     {
         if region != nil {
             return CGRect(x: region!.minX * self.frame.width, y: region!.minY * self.frame.height, 
@@ -522,6 +413,15 @@ class AVPrevView : NSImageView, AVPrevViewProtocol
         
         
     }
+    
+    func removeAllEffect()
+    {
+        for i in 0..<self.effects.count
+        {
+            self.removeEffect(index: i)
+        }
+    }
+    
     
     /**
      if video is not playing, play video. Or pause playing.  
