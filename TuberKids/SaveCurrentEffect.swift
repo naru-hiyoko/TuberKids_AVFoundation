@@ -95,29 +95,8 @@ class SaveCurrentEffect : NSObject
         let data = try! Data.init(contentsOf: dataUrl!)
         let effect = NSKeyedUnarchiver.unarchiveObject(with: data) as! EffectData
         let timeRange : CMTimeRange = effect.timeRange 
-        let fSize : CGRect = effect.normalizedFrame!
+        let fSize : CGRect = effect.rect!
         
-        switch effect.type! {
-        case AVMediaTypeImage:
-            preview.pushImageEffect(resourcePath: effect.url!, duration: timeRange, region: fSize, options: effect.options)
-            break
-        case AVMediaTypeText:
-            let text = effect.options!["text"] as! String
-            preview.pushTextEffect(text: text, resourcePath: effect.url!, duration: timeRange, region: fSize, options: effect.options)
-            break
-        case AVMediaTypeAudio:
-            let mute = effect.options!["mute"] as! Bool
-            let volume = effect.options!["volume"] as! Float
-            let trackId = editer.insertAudioEffect(resourcePath: effect.url!, duration: effect.timeRange, mute: mute, volume: volume)!
-            preview.pushAudioEffect(resourcePath: effect.url!, duration: effect.timeRange,
-                                    region: effect.normalizedFrame, trackId: trackId, options: effect.options)
-            break
-            
-        default:
-            let al = NSAlert.init()
-            al.messageText = "Not supported"
-            al.runModal()
-        }
 
     }
         

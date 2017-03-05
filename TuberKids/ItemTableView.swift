@@ -10,14 +10,18 @@ import Foundation
 import Cocoa
 import AVFoundation
 
+class TableItems 
+{
+    static var items: [URL] = []
+    static var textInRow: [String] = []
+}
+
 class ItemTableView : NSTableView, NSTableViewDelegate, NSTableViewDataSource
 {
-
-    var items : [URL] = []
-    var textInRow : [String] = []
-    
-    var controler : ViewController?
-    var editor : VideoEditController?
+    var isExistsSelectedRow: Bool
+    {
+        return self.selectedRow == -1 ? false : true
+    }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -31,10 +35,10 @@ class ItemTableView : NSTableView, NSTableViewDelegate, NSTableViewDataSource
         
         let cell = tableColumn?.dataCell(forRow: row) as! NSTextFieldCell
         
-        if textInRow[row] == "" {
-            cell.title = items[row].lastPathComponent
+        if TableItems.textInRow[row] == "" {
+            cell.title = TableItems.items[row].lastPathComponent
         } else {
-            cell.title = textInRow[row]
+            cell.title = TableItems.textInRow[row]
         }
         cell.isEditable = true
         return cell
@@ -51,17 +55,17 @@ class ItemTableView : NSTableView, NSTableViewDelegate, NSTableViewDataSource
     override func textShouldEndEditing(_ textObject: NSText) -> Bool {
         let id = self.selectedRow
         let string = textObject.string!
-        textInRow[id] = string
+        TableItems.textInRow[id] = string
         return true
     }
     
     
     func numberOfRows(in tableView: NSTableView) -> Int {
-        if textInRow.count != self.items.count {
+        if TableItems.textInRow.count != TableItems.items.count {
             //textInRow = [String].init(count: self.items.count, repeatedValue: "")
-            textInRow.append("")
+            TableItems.textInRow.append("")
         }
-        return items.count
+        return TableItems.items.count
     }
     
     
@@ -70,8 +74,8 @@ class ItemTableView : NSTableView, NSTableViewDelegate, NSTableViewDataSource
         if row == -1 {
             return
         }
-        self.items.remove(at: row)
-        self.textInRow.remove(at: row)
+        TableItems.items.remove(at: row)
+        TableItems.textInRow.remove(at: row)
         self.reloadData()
     }
     
@@ -83,19 +87,12 @@ class ItemTableView : NSTableView, NSTableViewDelegate, NSTableViewDataSource
             let propertyList = item.propertyList(forType: "public.file-url") as Any
             let url = NSURL.init(pasteboardPropertyList: propertyList, ofType: "public.file-url") as! URL
             
-            if self.editor!.sourceURL == nil
+            TableItems.items.append(url)
+            while TableItems.textInRow.count < TableItems.items.count
             {
-                self.editor!.loadSourceFile(url)
-                self.controler?.syncItems([url])
-                
-                return true
-            } else {
-                self.items.append(url)
-                while self.textInRow.count < self.items.count
-                {
-                    self.textInRow.append("")
-                }
+                TableItems.textInRow.append("")
             }
+
         }
         self.reloadData()
 
@@ -109,7 +106,7 @@ class ItemTableView : NSTableView, NSTableViewDelegate, NSTableViewDataSource
     func tableViewSelectionDidChange(_ notification: Notification) {
         let i = self.selectedRow
         if i == -1 { return }
-        let s = self.textInRow[i]
+        let s = TableItems.textInRow[i]
 
         Swift.print(s)
     }

@@ -20,18 +20,19 @@ import AVFoundation
 extension VideoEditController
 {
     
-    func getDefaultAnimation(datum : EffectData) -> CABasicAnimation
+    class func getDefaultAnimation(_ datum : EffectData) -> CABasicAnimation
     {
         let timeRange = datum.timeRange  
         let animation = CABasicAnimation(keyPath: "opacity")
         animation.isRemovedOnCompletion = false
         animation.fromValue = 1.0
         animation.toValue = 1.0
-        animation.beginTime = AVCoreAnimationBeginTimeAtZero + timeRange.start.seconds
-        animation.duration = timeRange.end.seconds - timeRange.start.seconds
+        animation.beginTime = AVCoreAnimationBeginTimeAtZero + timeRange!.start.seconds
+        animation.duration = timeRange!.end.seconds - timeRange!.start.seconds
         return animation
     }
     
+    /*
     func getFadeAnimation(datum : EffectData) -> [CABasicAnimation]
     {
         let timeRange = datum.timeRange   
@@ -111,7 +112,7 @@ extension VideoEditController
         
     }    
     
-    
+    */
     
     
 }

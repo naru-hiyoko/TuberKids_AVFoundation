@@ -14,17 +14,22 @@ extension ViewController
 {
     @IBAction func onSaveStateButton(_ sender : NSButton?)
     {
-        guard let sourceURL = self.video_editer.sourceURL else { return }
+        guard let sourceURL = VideoDescription.sourceURL else { return }
         
         let sk = SaveCurrentEffect.init()
-        sk.saveState(sourceURL, effects: self.preview.effects)
+//        sk.saveState(sourceURL, effects: self.preview.effects)
     }
     
     @IBAction func onLoadStateButton(_ sender : NSButton?)
     {
-        if self.video_editer.sourceURL == nil { return }
+        if VideoDescription.isNullSet{ return }
         
         let sk = SaveCurrentEffect.init()
         sk.loadState(preview: self.preview, editer: self.video_editer)
+    }
+    
+    @IBAction func toolButtonDown(_ sender: NSButton?)
+    {
+        
     }
 }

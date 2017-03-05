@@ -12,13 +12,9 @@ import AVFoundation
 
 class SeekBar : NSSlider
 {
-    var delegate : ViewController?
-    
-    fileprivate var asset : AVAsset?
-    fileprivate var generator : AVAssetImageGenerator?
-    var thumbnail : CALayer?
-    var textLayer : CATextLayer?
-    
+    private var posA: Double = 0.0
+    private var posB: Double = 0.0
+    private let rangeLayer = CALayer()
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -28,23 +24,14 @@ class SeekBar : NSSlider
         self.isContinuous = true
         self.wantsLayer = true
         
-        self.textLayer = CATextLayer()
-        self.textLayer?.frame = CGRect(x: 0, y: 0, width: 60, height: 20)
-        self.textLayer?.backgroundColor = CGColor.init(gray: 0.7, alpha: 0.5)
-        self.textLayer?.foregroundColor = NSColor.black.cgColor
-        self.textLayer?.fontSize = 16
-        self.textLayer?.alignmentMode = "center"
+        rangeLayer.frame = CGRect.init(x: 0, y: 0, width: 5, height: self.frame.height)
+        rangeLayer.backgroundColor = CGColor.init(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.4)
+        rangeLayer.isHidden = true
+        self.layer!.addSublayer(rangeLayer)
         
-        self.thumbnail = CALayer.init()
 
     }
     
-    var leftDown : ((_ time : CMTime) -> Void) = { _ in
-        
-    }
-    var rightDown : (() -> Void) = { _ in
-        
-    }
    
     
     override func mouseDown(with theEvent: NSEvent) {
@@ -52,50 +39,89 @@ class SeekBar : NSSlider
 
         let x = (theEvent.locationInWindow.x - self.frame.minX) / self.frame.width
         let time = CMTimeMakeWithSeconds(self.maxValue * Double(x), 600)
-        self.leftDown(time)
 
     }
     
     
     override func mouseExited(with theEvent: NSEvent) {
-        self.thumbnail?.isHidden = true
     }
     
     override func mouseEntered(with theEvent: NSEvent) {
-        self.thumbnail?.isHidden = false
     }
     
     override func rightMouseDown(with theEvent: NSEvent) {
-//        let x = (theEvent.locationInWindow.x - self.frame.minX) / self.frame.width
-//        let time = CMTimeMakeWithSeconds(self.maxValue * Double(x), 600)
-        self.rightDown()
+        Swift.print("set: \(self.doubleValue)")
+        update(self.doubleValue)
     }
     
+    private func updateValues(_ p: Double)
+    {
+        posA = posA.constraint(lower: self.minValue, upper: self.maxValue)
+        posB = posB.constraint(lower: self.minValue, upper: self.maxValue)        
+        
+        if abs(posA - p) > abs(posB - p)
+        {
+            self.posB = p
+        } else {
+            self.posA = p
+        }
+        
+        if posB.isLessThanOrEqualTo(posA)
+        {
+            CurrentOperation.effectIn = CMTimeMakeWithSeconds(posB, 600)
+            CurrentOperation.effectOut = CMTimeMakeWithSeconds(posA, 600)
+        } else {
+            CurrentOperation.effectIn = CMTimeMakeWithSeconds(posA, 600)
+            CurrentOperation.effectOut = CMTimeMakeWithSeconds(posB, 600)
+         }
+    }
+    
+    private func update(_ p: Double)
+    {
+        self.updateValues(p)
+        let r = self.maxValue - self.minValue
+        Swift.print("\(min(self.posA, self.posB)) \(max(self.posA, self.posB))")
+        let x = ((min(self.posA, self.posB) - self.minValue) / r) * Double(self.frame.width)
+        let width = ((max(self.posA, self.posB) - self.minValue) / r) * Double(self.frame.width) - x
+        
+        let delta = Double(self.frame.height / 2.0)
+        rangeLayer.frame = CGRect.init(x: x + delta, y: 0, width: width - delta, height: Double(self.frame.height))
+        rangeLayer.isHidden = false
+        
+    }
 
 
         
     override func mouseMoved(with theEvent: NSEvent) {
-
-//        guard let _generator = self.generator else { return }
-        let x = (theEvent.locationInWindow.x - self.frame.minX) / self.frame.width
-        let t = (self.delegate!.rangeIndicaterView.maxValueAorB - self.delegate!.rangeIndicaterView.minValueAorB) * CGFloat(x) + self.delegate!.rangeIndicaterView.minValueAorB
-        let time = CMTimeMakeWithSeconds(Double(t), 600)
-        self.thumbnail?.frame = CGRect(x: theEvent.locationInWindow.x, y: theEvent.locationInWindow.y, width: 120, height: 80)
-
-
         
-        let text = String(NSString.init(format: "%0.2f(s)", time.seconds))
-        self.textLayer?.string = text
-        self.thumbnail?.addSublayer(self.textLayer!)
-        self.thumbnail?.isHidden = false
-        self.delegate?.view.layer!.insertSublayer(self.thumbnail!, above: self.delegate!.itemView.layer)
     }
     
-    func load(_ asset : AVAsset)
+    func setLimit(lower: Double, upper: Double)
     {
-        self.generator = AVAssetImageGenerator(asset: asset)
+        self.minValue = lower
+        self.maxValue = upper
+        self.doubleValue = self.minValue
+
     }
-    
+
+    // used for live updating constraint.
+    func setLimit(range: CMTimeRange)
+    {
+        self.minValue = range.start.seconds
+        self.maxValue = range.end.seconds
+    }
+
+    var range: CMTimeRange {
+        let t1 = CMTimeMakeWithSeconds(posA, 600)
+        let t2 = CMTimeMakeWithSeconds(posB, 600)        
+        if t1.seconds.isLess(than: t2.seconds)
+        {
+            return CMTimeRange.init(start: t1, end: t2)
+
+        } else {
+            return CMTimeRange.init(start: t2, end: t1)
+        }
+    }
     
     
 }

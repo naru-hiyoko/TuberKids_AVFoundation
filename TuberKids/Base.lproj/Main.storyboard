@@ -204,7 +204,7 @@
                                 </customSpacing>
                             </stackView>
                             <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jcZ-NV-2bE" customClass="RangeIndicatorView" customModule="TuberKids" customModuleProvider="target">
-                                <rect key="frame" x="13" y="159" width="713" height="16"/>
+                                <rect key="frame" x="61" y="159" width="607" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="7ra-rN-8Pb"/>
                                 </constraints>
@@ -218,60 +218,10 @@
                                 </textFieldCell>
                             </textField>
                             <stackView distribution="fill" orientation="horizontal" alignment="bottom" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GDY-c1-u91">
-                                <rect key="frame" x="315" y="128" width="427" height="22"/>
+                                <rect key="frame" x="642" y="128" width="100" height="22"/>
                                 <subviews>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nm3-CT-NCd">
-                                        <rect key="frame" x="-2" y="0.0" width="86" height="13"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="タイムレンジ : " id="0qB-tR-qjf">
-                                            <font key="font" size="13" name=".HiraKakuInterface-W3"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f6N-a8-pJW">
-                                        <rect key="frame" x="90" y="0.0" width="70" height="22"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="70" id="2gQ-tg-JM9"/>
-                                        </constraints>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" placeholderString="from" drawsBackground="YES" id="rgM-ch-UrX">
-                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="arf-ad-IZX"/>
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1pT-26-TiA">
-                                        <rect key="frame" x="166" y="0.0" width="16" height="17"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="~" id="CAB-7Q-YG1">
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L0c-Am-xDB">
-                                        <rect key="frame" x="188" y="0.0" width="70" height="22"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="70" id="Qu7-lR-7Sa"/>
-                                        </constraints>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" placeholderString="to" drawsBackground="YES" id="uYs-1Q-LER">
-                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="vOl-zl-vxY"/>
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <button identifier="set" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="47t-iI-Qzc">
-                                        <rect key="frame" x="266" y="-1" width="49" height="19"/>
-                                        <buttonCell key="cell" type="roundRect" title="セット" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="daC-Sv-lgh">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" size="12" name=".HiraKakuInterface-W3"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="onRangeButton:" target="XfG-lQ-9wD" id="Z0B-rd-myk"/>
-                                        </connections>
-                                    </button>
                                     <button identifier="reset" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NRr-o6-7Xe">
-                                        <rect key="frame" x="323" y="-1" width="59" height="19"/>
+                                        <rect key="frame" x="0.0" y="-1" width="59" height="19"/>
                                         <buttonCell key="cell" type="roundRect" title="リセット" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zhx-kz-wIY">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" size="12" name=".HiraKakuInterface-W3"/>
@@ -281,7 +231,7 @@
                                         </connections>
                                     </button>
                                     <button identifier="play_button" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zBZ-SD-N4f">
-                                        <rect key="frame" x="390" y="-1" width="37" height="19"/>
+                                        <rect key="frame" x="67" y="-1" width="33" height="19"/>
                                         <buttonCell key="cell" type="roundRect" title="再生" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rLV-Bx-gvC">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" size="12" name=".HiraKakuInterface-W3"/>
@@ -293,23 +243,13 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="5cj-dT-OAo"/>
-                                    <constraint firstAttribute="width" constant="427" id="iKV-80-Do1"/>
+                                    <constraint firstAttribute="width" constant="100" id="iKV-80-Do1"/>
                                 </constraints>
                                 <visibilityPriorities>
                                     <integer value="1000"/>
                                     <integer value="1000"/>
-                                    <integer value="1000"/>
-                                    <integer value="1000"/>
-                                    <integer value="1000"/>
-                                    <integer value="1000"/>
-                                    <integer value="1000"/>
                                 </visibilityPriorities>
                                 <customSpacing>
-                                    <real value="3.4028234663852886e+38"/>
-                                    <real value="3.4028234663852886e+38"/>
-                                    <real value="3.4028234663852886e+38"/>
-                                    <real value="3.4028234663852886e+38"/>
-                                    <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
@@ -362,138 +302,43 @@
                                 </tableHeaderView>
                             </scrollView>
                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m2i-xp-eXK">
-                                <rect key="frame" x="15" y="97" width="408" height="21"/>
-                                <subviews>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="10o-eE-rPt">
-                                        <rect key="frame" x="-2" y="2" width="157" height="17"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Image / Text の挿入方法   :" id="ziZ-U6-M6p">
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <popUpButton identifier="animation_type" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w8P-ZP-iLB">
-                                        <rect key="frame" x="159" y="-3" width="86" height="26"/>
-                                        <popUpButtonCell key="cell" type="push" title="default" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="BMF-vN-ffl" id="KGc-ZC-H2N">
-                                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="menu"/>
-                                            <menu key="menu" id="YoX-uu-a5P">
-                                                <items>
-                                                    <menuItem title="default" state="on" id="BMF-vN-ffl">
-                                                        <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                    </menuItem>
-                                                    <menuItem title="フェード" id="d8f-5b-tVn"/>
-                                                    <menuItem title="スケール" id="AdI-jz-v1V">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                    </menuItem>
-                                                    <menuItem title="回転" id="GII-Cg-7ml">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                    </menuItem>
-                                                </items>
-                                            </menu>
-                                        </popUpButtonCell>
-                                    </popUpButton>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qq7-r7-fAT">
-                                        <rect key="frame" x="250" y="0.5" width="59" height="19"/>
-                                        <buttonCell key="cell" type="roundRect" title="詳細設定" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="InX-sG-OUy">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" size="12" name=".HiraKakuInterface-W3"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="openControllerB:" target="XfG-lQ-9wD" id="A3s-W4-m4v"/>
-                                        </connections>
-                                    </button>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pmW-EU-58I">
-                                        <rect key="frame" x="317" y="0.5" width="91" height="19"/>
-                                        <buttonCell key="cell" type="roundRect" title="フォントの設定" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8xA-Vj-Nby">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" size="12" name=".HiraKakuInterface-W3"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="openFontPanel:" target="XfG-lQ-9wD" id="Zlx-Br-yay"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
+                                <rect key="frame" x="15" y="97" width="100" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="WQk-PJ-GDS"/>
-                                    <constraint firstAttribute="width" constant="408" id="vJh-jJ-rPT"/>
+                                    <constraint firstAttribute="width" constant="100" id="vJh-jJ-rPT"/>
                                 </constraints>
-                                <visibilityPriorities>
-                                    <integer value="1000"/>
-                                    <integer value="1000"/>
-                                    <integer value="1000"/>
-                                    <integer value="1000"/>
-                                </visibilityPriorities>
-                                <customSpacing>
-                                    <real value="3.4028234663852886e+38"/>
-                                    <real value="3.4028234663852886e+38"/>
-                                    <real value="3.4028234663852886e+38"/>
-                                    <real value="3.4028234663852886e+38"/>
-                                </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="bottom" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y8R-D6-IKi">
-                                <rect key="frame" x="15" y="65" width="538" height="22"/>
+                                <rect key="frame" x="15" y="65" width="300" height="22"/>
                                 <subviews>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4fu-QM-cGt">
-                                        <rect key="frame" x="-2" y="0.0" width="160" height="17"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Audio / Video の挿入方法 : " id="ZaN-w1-kKJ">
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="55v-E5-vsX">
-                                        <rect key="frame" x="162" y="0.0" width="39" height="13"/>
+                                        <rect key="frame" x="-2" y="0.0" width="46" height="13"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="音量 :" id="YEf-24-cPf">
                                             <font key="font" size="13" name=".HiraKakuInterface-W3"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="c0a-vI-Avj">
-                                        <rect key="frame" x="207" y="0.0" width="50" height="22"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="1" placeholderString="音量 (0 ~ 1)" drawsBackground="YES" id="qbN-zA-Byo">
-                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="sa1-GK-nEZ"/>
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="WgH-JG-Lb9">
-                                        <rect key="frame" x="263" y="-2" width="130" height="18"/>
-                                        <buttonCell key="cell" type="check" title="ミュートにして挿入" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="oiL-OQ-WSV">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="13" name=".HiraKakuInterface-W3"/>
-                                        </buttonCell>
-                                        <accessibility identifier="mute_button"/>
-                                    </button>
-                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="Qfg-zU-2Sw">
-                                        <rect key="frame" x="397" y="-2" width="143" height="18"/>
-                                        <buttonCell key="cell" type="check" title="指定時間内のみを挿入" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="qkf-8h-Jcj">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="13" name=".HiraKakuInterface-W3"/>
-                                        </buttonCell>
-                                        <accessibility identifier="restrict_button"/>
-                                    </button>
+                                    <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ePE-N5-34b">
+                                        <rect key="frame" x="48" y="-2" width="254" height="19"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="250" id="IVk-Lb-6eZ"/>
+                                        </constraints>
+                                        <sliderCell key="cell" alignment="left" maxValue="100" doubleValue="100" tickMarkPosition="above" sliderType="linear" id="EC1-54-Iyy"/>
+                                        <connections>
+                                            <action selector="audioVolumeChanged:" target="XfG-lQ-9wD" id="FAF-a7-Yg4"/>
+                                        </connections>
+                                    </slider>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="BX5-fv-bvj"/>
-                                    <constraint firstAttribute="width" constant="538" id="YUW-nk-R5e"/>
+                                    <constraint firstAttribute="width" constant="300" id="YUW-nk-R5e"/>
                                 </constraints>
                                 <visibilityPriorities>
                                     <integer value="1000"/>
                                     <integer value="1000"/>
-                                    <integer value="1000"/>
-                                    <integer value="1000"/>
-                                    <integer value="1000"/>
                                 </visibilityPriorities>
                                 <customSpacing>
-                                    <real value="3.4028234663852886e+38"/>
-                                    <real value="3.4028234663852886e+38"/>
-                                    <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
@@ -508,7 +353,7 @@ DQ
                             <progressIndicator wantsLayer="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="Xle-zI-RQl">
                                 <rect key="frame" x="5" y="4" width="1022" height="20"/>
                             </progressIndicator>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vff-mP-4a8" userLabel="preview" customClass="AVPrevView" customModule="TuberKids" customModuleProvider="target">
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vff-mP-4a8" userLabel="preview" customClass="AVPreview" customModule="TuberKids" customModuleProvider="target">
                                 <rect key="frame" x="5" y="201" width="732" height="418"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="qzF-ck-Upe"/>
                             </imageView>
@@ -516,10 +361,10 @@ DQ
                         <constraints>
                             <constraint firstItem="0JK-qi-gRU" firstAttribute="leading" secondItem="Vff-mP-4a8" secondAttribute="trailing" constant="10" id="0D3-zB-8Gv"/>
                             <constraint firstItem="m2i-xp-eXK" firstAttribute="top" secondItem="h5z-p3-LhU" secondAttribute="bottom" constant="10" id="0tc-SA-01U"/>
-                            <constraint firstItem="GDY-c1-u91" firstAttribute="leading" secondItem="h5z-p3-LhU" secondAttribute="trailing" constant="10" id="131-ZE-woR"/>
+                            <constraint firstItem="GDY-c1-u91" firstAttribute="leading" secondItem="h5z-p3-LhU" secondAttribute="trailing" constant="100" id="131-ZE-woR"/>
                             <constraint firstItem="0JK-qi-gRU" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="5" id="3hz-HF-vHc"/>
                             <constraint firstAttribute="bottom" secondItem="bO1-0x-wap" secondAttribute="bottom" constant="15" id="3rW-a8-mPt"/>
-                            <constraint firstItem="jcZ-NV-2bE" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="5" id="3sB-bu-JV4"/>
+                            <constraint firstItem="jcZ-NV-2bE" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="3sB-bu-JV4"/>
                             <constraint firstItem="0JK-qi-gRU" firstAttribute="leading" secondItem="rh3-UL-EGS" secondAttribute="trailing" constant="10" id="4UU-Mc-MJM"/>
                             <constraint firstItem="bO1-0x-wap" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="15" id="CYh-5X-NAQ"/>
                             <constraint firstAttribute="trailing" secondItem="0JK-qi-gRU" secondAttribute="trailing" constant="5" id="GYG-4o-JtU"/>
@@ -528,7 +373,7 @@ DQ
                             <constraint firstItem="Y8R-D6-IKi" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="15" id="P1d-Qs-Y9n"/>
                             <constraint firstItem="rh3-UL-EGS" firstAttribute="top" secondItem="Vff-mP-4a8" secondAttribute="bottom" constant="5" id="UKD-0R-3j4"/>
                             <constraint firstItem="rh3-UL-EGS" firstAttribute="top" secondItem="Vff-mP-4a8" secondAttribute="bottom" constant="5" id="USr-jl-PkQ"/>
-                            <constraint firstItem="0JK-qi-gRU" firstAttribute="leading" secondItem="jcZ-NV-2bE" secondAttribute="trailing" constant="10" id="WFr-uZ-8Za"/>
+                            <constraint firstItem="0JK-qi-gRU" firstAttribute="leading" secondItem="jcZ-NV-2bE" secondAttribute="trailing" constant="20" id="WFr-uZ-8Za"/>
                             <constraint firstItem="Vff-mP-4a8" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="5" id="b3N-jq-vuG"/>
                             <constraint firstItem="bO1-0x-wap" firstAttribute="top" secondItem="Y8R-D6-IKi" secondAttribute="bottom" constant="30" id="b8g-IN-Uuo"/>
                             <constraint firstItem="Y8R-D6-IKi" firstAttribute="top" secondItem="m2i-xp-eXK" secondAttribute="bottom" constant="10" id="bz2-sf-xFz"/>
@@ -545,20 +390,13 @@ DQ
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="animationTypePopUp" destination="w8P-ZP-iLB" id="EfI-qa-NTc"/>
-                        <outlet property="fromValueField" destination="f6N-a8-pJW" id="NzC-Uc-xhi"/>
                         <outlet property="infoText" destination="h5z-p3-LhU" id="Nhg-Bq-hvu"/>
-                        <outlet property="itemView" destination="owQ-GN-r69" id="Xtz-ZI-Tmd"/>
-                        <outlet property="mute_button" destination="WgH-JG-Lb9" id="mzy-CS-zhB"/>
                         <outlet property="playButton" destination="zBZ-SD-N4f" id="IgJ-fX-fgg"/>
                         <outlet property="presetNameButton" destination="zCh-DQ-MB5" id="yRc-DP-4NO"/>
                         <outlet property="preview" destination="Vff-mP-4a8" id="Frt-Uk-IE7"/>
                         <outlet property="progress" destination="Xle-zI-RQl" id="q4S-sE-NlD"/>
                         <outlet property="rangeIndicaterView" destination="jcZ-NV-2bE" id="K0Y-wc-fbc"/>
-                        <outlet property="restrict_button" destination="Qfg-zU-2Sw" id="sb1-Zb-Jgj"/>
                         <outlet property="seekBar" destination="rh3-UL-EGS" id="0xT-fQ-wc0"/>
-                        <outlet property="toValueField" destination="L0c-Am-xDB" id="wXZ-pn-N6G"/>
-                        <outlet property="volumeValueLabel" destination="c0a-vI-Avj" id="42V-Lc-IZC"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -566,18 +404,18 @@ DQ
             </objects>
             <point key="canvasLocation" x="1572" y="262"/>
         </scene>
-        <!--View ControllerC-->
+        <!--Tools View Controller-->
         <scene sceneID="eQG-Bi-UZk">
             <objects>
-                <viewController storyboardIdentifier="controllerC" id="h4v-D6-38p" customClass="ViewControllerC" customModule="TuberKids" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="toolsController" id="h4v-D6-38p" customClass="ToolsViewController" customModule="TuberKids" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="x4c-Me-yHO">
-                        <rect key="frame" x="0.0" y="0.0" width="530" height="156"/>
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="156"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <button identifier="scale_button" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="whX-Tp-Vad">
-                                <rect key="frame" x="78" y="40" width="124" height="19"/>
+                            <button identifier="scaleRange" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="whX-Tp-Vad">
+                                <rect key="frame" x="81" y="51" width="80" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="roundRect" title="秒にレンジをスケール" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" identifier="scale_button" imageScaling="proportionallyDown" inset="2" id="wIx-9A-Eii">
+                                <buttonCell key="cell" type="roundRect" title="秒にスケール" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" identifier="scale_button" imageScaling="proportionallyDown" inset="2" id="wIx-9A-Eii">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="12" name=".HiraKakuInterface-W3"/>
                                 </buttonCell>
@@ -586,7 +424,7 @@ DQ
                                 </connections>
                             </button>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R2t-J2-UxF">
-                                <rect key="frame" x="30" y="39" width="40" height="22"/>
+                                <rect key="frame" x="20" y="49" width="40" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="2" drawsBackground="YES" id="TGR-88-9P5">
                                     <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="Qva-ni-PKK"/>
@@ -596,7 +434,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3gf-1v-UOz">
-                                <rect key="frame" x="193" y="13" width="88" height="18"/>
+                                <rect key="frame" x="176" y="21" width="88" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Audio Only" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="y9L-KO-0c3">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -604,7 +442,7 @@ DQ
                                 </buttonCell>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FFS-WX-FRC">
-                                <rect key="frame" x="30" y="12" width="145" height="19"/>
+                                <rect key="frame" x="20" y="22" width="145" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="roundRect" title="選択範囲をエクスポート" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PAK-2s-FWr">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -614,10 +452,10 @@ DQ
                                     <action selector="exportWithSelectRegion:" target="h4v-D6-38p" id="UEZ-3y-4wA"/>
                                 </connections>
                             </button>
-                            <button identifier="rangeIn" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="42v-vk-Cbj">
-                                <rect key="frame" x="215" y="68" width="136" height="19"/>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="42v-vk-Cbj">
+                                <rect key="frame" x="170" y="79" width="92" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="roundRect" title="レンジに動画を差し込む" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tec-WN-2DR">
+                                <buttonCell key="cell" type="roundRect" title="動画を挿入する" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" identifier="insertMovie" imageScaling="proportionallyDown" inset="2" id="tec-WN-2DR">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="12" name=".HiraKakuInterface-W3"/>
                                 </buttonCell>
@@ -625,21 +463,10 @@ DQ
                                     <action selector="insertButton:" target="h4v-D6-38p" id="NN7-j9-d3z"/>
                                 </connections>
                             </button>
-                            <button identifier="insert_vid_top" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hJT-52-uQX">
-                                <rect key="frame" x="30" y="68" width="159" height="19"/>
+                            <button identifier="insertEmpty" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aCW-D3-1eq">
+                                <rect key="frame" x="81" y="79" width="81" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="roundRect" title="レンジの先頭に動画を入れる" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3QD-4s-AwZ">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" size="12" name=".HiraKakuInterface-W3"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="insertButton:" target="h4v-D6-38p" id="RoD-Z8-M2W"/>
-                                </connections>
-                            </button>
-                            <button identifier="emptyRange" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aCW-D3-1eq">
-                                <rect key="frame" x="376" y="68" width="125" height="19"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="roundRect" title="レンジに空白を入れる" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bat-9B-4R5">
+                                <buttonCell key="cell" type="roundRect" title="空白を入れる" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bat-9B-4R5">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="12" name=".HiraKakuInterface-W3"/>
                                 </buttonCell>
@@ -648,18 +475,18 @@ DQ
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f2z-KH-RIA">
-                                <rect key="frame" x="203" y="122" width="125" height="22"/>
+                                <rect key="frame" x="79" y="114" width="125" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="切り出しツール" id="nEp-js-qRj">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Tools" id="nEp-js-qRj">
                                     <font key="font" size="18" name=".HiraKakuInterface-W3"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button identifier="cut_button" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UC4-Ei-LSu">
-                                <rect key="frame" x="238" y="39" width="91" height="19"/>
+                            <button identifier="cutRange" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UC4-Ei-LSu">
+                                <rect key="frame" x="20" y="79" width="48" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="roundRect" title="レンジをカット" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tv7-fO-nE9">
+                                <buttonCell key="cell" type="roundRect" title="カット" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tv7-fO-nE9">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="12" name=".HiraKakuInterface-W3"/>
                                 </buttonCell>
@@ -667,6 +494,11 @@ DQ
                                     <action selector="insertButton:" target="h4v-D6-38p" id="3RJ-lC-qk9"/>
                                 </connections>
                             </button>
+                            <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G0F-Un-6un">
+                                <rect key="frame" x="57" y="47" width="19" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="ocK-Pr-IA9"/>
+                            </stepper>
                         </subviews>
                     </view>
                     <connections>
@@ -676,93 +508,7 @@ DQ
                 </viewController>
                 <customObject id="aWq-Xj-ul1" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1880" y="775"/>
-        </scene>
-        <!--View ControllerB-->
-        <scene sceneID="0im-P0-9ZQ">
-            <objects>
-                <viewController storyboardIdentifier="controllerB" showSeguePresentationStyle="single" id="nHw-Jl-1Uf" customClass="ViewControllerB" customModule="TuberKids" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="2Kc-Sc-uTh">
-                        <rect key="frame" x="0.0" y="0.0" width="728" height="124"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n0B-tJ-rpd">
-                                <rect key="frame" x="255" y="94" width="218" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="アニメーション詳細設定" id="CEC-Fs-dwb">
-                                    <font key="font" size="18" name=".HiraKakuInterface-W3"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PPW-Gp-6wH">
-                                <rect key="frame" x="193" y="59" width="17" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="~" id="8NH-M6-gh3">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bjc-6r-p3T">
-                                <rect key="frame" x="216" y="54" width="72" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="1" placeholderString="to" drawsBackground="YES" id="zTj-te-KWA">
-                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="4Ko-U8-QGc"/>
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xHF-9l-ilA">
-                                <rect key="frame" x="309" y="54" width="152" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="アニメーション時間 (秒) : " id="nQh-2z-w9h">
-                                    <font key="font" size="13" name=".HiraKakuInterface-W3"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gxw-Z0-qAC">
-                                <rect key="frame" x="18" y="54" width="106" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="変化値" id="O7Q-id-zLS">
-                                    <font key="font" size="13" name=".HiraKakuInterface-W3"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SBV-gU-Y0B">
-                                <rect key="frame" x="118" y="54" width="69" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="0" placeholderString="from" drawsBackground="YES" id="oaM-Jv-7RN">
-                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="bFS-XS-0x8"/>
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e3k-3e-cOi">
-                                <rect key="frame" x="467" y="56" width="67" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="1" drawsBackground="YES" id="Lrz-Gg-OIm">
-                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="gAo-63-73E"/>
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                        </subviews>
-                    </view>
-                    <connections>
-                        <outlet property="_durationField" destination="e3k-3e-cOi" id="H0a-d4-Z9o"/>
-                        <outlet property="_fromValField" destination="SBV-gU-Y0B" id="j3D-KW-AIf"/>
-                        <outlet property="_toValField" destination="Bjc-6r-p3T" id="9yA-53-Qwx"/>
-                    </connections>
-                </viewController>
-                <customObject id="rdF-ns-ZfU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1143" y="737"/>
+            <point key="canvasLocation" x="1756" y="738"/>
         </scene>
     </scenes>
 </document>

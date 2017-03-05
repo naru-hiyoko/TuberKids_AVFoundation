@@ -10,16 +10,10 @@ import Foundation
 import Cocoa
 import AVFoundation
 
-/**
- Preview 用
- アニメーションの定義をここに書く
- func updateVisibleState(seconds time : Double) 中の switch case を追加すること
- 
- */
 
-extension AVPrevView
+extension AVPreview
 {
-    
+    /*
     func getFadeAnimation(datum : EffectData) -> CABasicAnimation
     {
         let options = datum.options!
@@ -91,6 +85,7 @@ extension AVPrevView
         
         
     }
+ */
     
     
 }

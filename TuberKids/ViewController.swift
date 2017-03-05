@@ -17,122 +17,87 @@ import Darwin
 class ViewController: NSViewController
 {
     let video_editer : VideoEditController = VideoEditController()
-    
+
     @IBOutlet weak var preview : AVPrevView!
-    @IBOutlet weak var itemView : ItemTableView!
-    @IBOutlet weak var itemViewScroll : NSScrollView!    
+
     @IBOutlet weak var playButton : NSButton!    
     @IBOutlet weak var seekBar : SeekBar!
     @IBOutlet weak var rangeIndicaterView : RangeIndicatorView!
     
-    @IBOutlet weak var mute_button : NSButton!
-    @IBOutlet weak var restrict_button : NSButton!    
-
-    // レンジバーが表示するタイムレンジ
-    @IBOutlet weak var fromValueField : NSTextField!
-    @IBOutlet weak var toValueField : NSTextField!
     
-    var timeAtCursor : Double = 0.0
+//    internal var timeAtCursor : Double = 0.0
     
     
    // 音声 or 動画 差し込み時に使う
     @IBOutlet weak var volumeValueLabel : NSTextField!
     
-    @IBOutlet weak var animationTypePopUp : NSPopUpButton!
-    
     @IBOutlet weak var infoText : NSTextField!
-    
-    var controllerB : ViewControllerB!
-    var controllerC : ViewControllerC!
+
+    var toolsViewController : ToolsViewController!
     
     @IBOutlet var progress : NSProgressIndicator!
     
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.controllerB = self.storyboard?.instantiateController(withIdentifier: "controllerB") as! ViewControllerB
-        self.controllerC = self.storyboard?.instantiateController(withIdentifier: "controllerC") as! ViewControllerC
+
+        self.toolsViewController = self.storyboard?.instantiateController(withIdentifier: "toolsController") as! ToolsViewController
         
 
         self.view.acceptsTouchEvents = true
         self.view.wantsLayer = true
         
-        self.itemView.editor = self.video_editer
-        self.itemView.controler = self
-        
-        self.rangeIndicaterView.delegate = self
-        self.seekBar.delegate = self
-        self.view.layer?.addSublayer(self.seekBar.thumbnail!)
-        self.preview.delegate = self
         self.extraSetups()
-    
+        
+        let url = URL.init(fileURLWithPath: "/Volumes/MacintoshHD3/Video/hello.mov")
+        self.video_editer.preview = self.preview        
+        self.video_editer.loadSourceVideoFromURL(url)
+        self.setupPreview(self.video_editer.composition!)
+
         return
     }
  
+    func test(_ sender: NSPopUpButton)
+    {
+        print("call")
 
-    
+    }
     
     func setupPreview(_ asset : AVAsset?)
     {
         
-        guard let _asset = asset else { return }
+        self.seekBar.setLimit(lower: 0.0, upper: self.video_editer.composition!.duration.seconds)
+        self.rangeIndicaterView.setLimit(lower: 0.0, upper: CGFloat(self.video_editer.composition!.duration.seconds))
         
 
-        let item = AVPlayerItem(asset: _asset)
-        self.preview.avPlayer = AVPlayer(playerItem: item)
-        self.preview.videoLayer = AVPlayerLayer(player: self.preview.avPlayer)
-        self.preview.videoLayer?.frame = CGRect(x: 0, y: 0, width: self.preview.frame.width, height: self.preview.frame.height)
-        if let subLayers = self.preview.layer!.sublayers {
-            for layer in subLayers
-            {
-                layer.removeFromSuperlayer()
-            }
-        }
-        
-        
-        self.preview.layer?.addSublayer(self.preview.videoLayer!)
-        self.seekBar.minValue = 0.0
-        self.seekBar.maxValue = self.video_editer.composition!.duration.seconds
-        self.seekBar.doubleValue = 0.0
-        
-        self.rangeIndicaterView.minValue = CGFloat(0.0)
-        self.rangeIndicaterView.maxValue = CGFloat(self.seekBar.maxValue)
-        self.rangeIndicaterView.setInitState()
-        
-        
         let queue = DispatchQueue.main
-        self.preview.avPlayer!.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(0.01, 600), queue: queue, using: { (time : CMTime) in 
-            if (self.video_editer.composition?.duration.seconds)! - 0.05 < time.seconds
-            {
-                self.preview.pause()
-            }
-            
-            if self.seekBar.maxValue <= time.seconds
-            {
-                self.preview.pause()
-            }
-            
-            self.seekBar.doubleValue = time.seconds
-            self.timeAtCursor = time.seconds
-            let str = self.formatTime(Time: CGFloat(time.seconds))
-            self.infoText.stringValue = "At. \(str)"
-            self.preview.updateVisibleState(seconds: time.seconds)   
-        })
+        self.preview.avPlayer!.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(0.01, 600),
+                                                       queue: queue, using: previewTimeObservingFunction)
         
-        self.seekBar.load(self.video_editer.composition!)
 
     }
     
-    fileprivate func formatTime(Time sec : CGFloat) -> String
+    private func previewTimeObservingFunction(_ time: CMTime)
     {
-        //        let ms : Int = Int(sec - CGFloat(sec))
-        let ss : Int = Int(sec) % 60
-        let m : Int = Int(sec) / 60
-        //        let mm : Int = m % 60
-        //        let h : Int = m / 60
-        return String(format: "%d:%02d", m, ss)
+        print(time.seconds)
+        self.seekBar.setLimit(range: self.rangeIndicaterView.range)
+        
+        if self.rangeIndicaterView.range.containsTime(time)
+        {
+            self.seekBar.doubleValue = time.seconds
+            self.preview.update(seconds: time.seconds)
+            let str = formatTime(Time: CGFloat(time.seconds))
+            self.infoText.stringValue = "At. \(str)"
+        } else {
+            self.preview.stop()
+        }
+        
+
     }
+    
+    
     
     override func viewWillAppear() {
         super.viewWillAppear()
@@ -154,14 +119,8 @@ class ViewController: NSViewController
     
     override func mouseDown(with theEvent: NSEvent) {
 
-        if self.itemView.selectedRow != -1 {
-            self.itemView.deselectRow(self.itemView.selectedRow)
-        }
-        
-        guard let indicater = self.rangeIndicaterView else {
-            return
-        }
-        indicater.mouseDown(with: theEvent)
+        self.rangeIndicaterView.mouseDown(with: theEvent)
+
     }
     
     
@@ -175,18 +134,13 @@ class ViewController: NSViewController
     override func keyDown(with theEvent: NSEvent) {
         
         if theEvent.keyCode == 0x33 && preview.selectedEffectIndex != nil {
-            self.preview.removeEffect(index: self.preview.selectedEffectIndex)
+//            self.preview.removeEffect(index: self.preview.selectedEffectIndex)
             return
         }
         
         
         if theEvent.keyCode == 0x33 {
-            if self.itemView.selectedRow != -1 
-            {
-                self.video_editer.resources.remove(at: self.itemView.selectedRow)
-                self.itemView.removeItemInRow(self.itemView.selectedRow)
-            }
-            
+            self.video_editer.removeResourceAtSelectedRow()
             return
         }
         
@@ -200,72 +154,72 @@ class ViewController: NSViewController
     
     @IBOutlet weak var presetNameButton : NSPopUpButton?
     
+    private func setExportPresetName()
+    {      
+        guard let index = self.presetNameButton?.indexOfSelectedItem else { return }
+        switch index {
+        case 0:
+            VideoDescription.exportPresetName = AVAssetExportPreset640x480
+        case 1:
+            VideoDescription.exportPresetName = AVAssetExportPreset1280x720
+        case 2:
+            VideoDescription.exportPresetName = AVAssetExportPreset1920x1080
+        default:
+            break
+        }
+        
+    }
+    
     @IBAction func onButton(_ sender : NSButton?) {
         
-        if self.video_editer.sourceURL == nil { return }
+        if VideoDescription.sourceURL == nil { return }
         
         if sender?.identifier == "play_button" 
         {
-            self.preview.toggleSwitch()
+            self.preview.play()
         }
         
        
         if sender?.identifier == "save_button"
         {
-            guard let index = self.presetNameButton?.indexOfSelectedItem else { return }
-            switch index {
-            case 0:
-                self.video_editer.presetName = AVAssetExportPreset640x480
-            case 1:
-                self.video_editer.presetName = AVAssetExportPreset1280x720
-            case 2:
-                self.video_editer.presetName = AVAssetExportPreset1920x1080
-            default:
-                break
-            }
-            self.video_editer.insertImageEffectsWithSet(effectData: self.preview.effects)
+//            self.video_editer.insertImageEffectsWithSet(effectData: self.preview.effects)
+            self.video_editer.export(EffectData.effects)
         }
         
-        if sender?.identifier == "cancel_button"
-        {
-//            return
-            guard let s = self.video_editer.session else { return }
-            s.cancelExport()
-            let panel = NSAlert.init()
-            panel.messageText = "中止しました"
-            panel.runModal()
-        }
         
     }
     
-    var funkSound : AVAudioPlayer!
+    @IBAction func saveButtonDown(_ sender: NSButton?)
+    {
+        self.setExportPresetName()
+//        self.video_editer.insertImageEffectsWithSet(effectData: self.preview.effects)
+    }
     
+    @IBAction func cancelExport(_ sender: NSButton?)
+    {
+        self.video_editer.cancelExport()
+        let panel = NSAlert.init()
+        panel.messageText = "中止しました"
+        panel.runModal()
+        
+    }
+    
+
     @IBAction func onRangeButton(_ sender : NSButton?)
     {
 
-        if self.video_editer.sourceURL == nil { return }
-        
-        if self.fromValueField.floatValue > self.toValueField.floatValue {
-            let path = Bundle.main.path(forResource: "Funk", ofType: "aiff")
-            let url = NSURL(string: path!)
-            self.funkSound = try! AVAudioPlayer(contentsOf: url!.absoluteURL!)
-            self.funkSound.play()
-            return
-        }
+        if VideoDescription.sourceURL == nil { return }
 
 
         if sender?.identifier == "set"
         {
-            let _from = self.fromValueField.doubleValue
-            let _to = self.toValueField.doubleValue
+            let _from = CurrentOperation.effectIn!.seconds
+            let _to = CurrentOperation.effectOut!.seconds
 
             self.seekBar.minValue = _from
             self.seekBar.maxValue = _to
             self.seekBar.doubleValue = _from
             
-            self.rangeIndicaterView.setValueOfA(CGFloat(_from))
-            self.rangeIndicaterView.setValueOfB(CGFloat(_to))
-            self.rangeIndicaterView.fillRegionBetweenAandB()
             
             let tolerance = CMTimeMakeWithSeconds(0.0001, 600)
             self.preview.avPlayer?.seek(to: CMTimeMakeWithSeconds(_from, 600), toleranceBefore: tolerance, toleranceAfter: tolerance)
@@ -278,8 +232,12 @@ class ViewController: NSViewController
         }
 
         
-        self.rangeIndicaterView.fillRegionBetweenAandB()
-        
+
+    }
+    
+    @IBAction func audioVolumeChanged(_ sender: NSSlider?)
+    {
+        CurrentOperation.audioVolume = sender!.doubleValue
     }
     
    
@@ -290,71 +248,16 @@ class ViewController: NSViewController
                           toleranceBefore: CMTimeMakeWithSeconds(0.0001, 600), toleranceAfter: CMTimeMakeWithSeconds(0.0001, 600))
     }
     
-
-    
-    
-    @IBOutlet weak var item : NSMenuItem!
-    
-    @IBAction func openFontPanel(_ sender : AnyObject?)
-    {
-        if self.video_editer.sourceURL == nil { return }
-        let font = NSFont.init(name: "HiraKakuProN-W3", size: 16)!
-        let manager = NSFontManager.shared()
-        let panel : NSFontPanel = manager.fontPanel(true)!
-        manager.orderFrontFontPanel(panel)
-        manager.setSelectedFont(font, isMultiple: false)
-    }
     
 
-    
-    
-    
-    
-    @IBAction func newProject (_ sender : AnyObject?)
-    {
-        let panel = NSOpenPanel()
-        panel.allowsMultipleSelection = false
-        panel.canChooseDirectories = false
-        panel.allowedFileTypes = ["mp4", "mov", "MOV"]
-        let ret = panel.runModal()
-        if ret == NSModalResponseCancel
-        {
-            return
-        } else {
-            let url = panel.url!
-            self.video_editer.deleteData()
-            if !self.video_editer.load([url]) { return }
-            self.preview.removeAllEffect()
-            self.setupPreview(self.video_editer.composition!)
-        }
-        
-        
-    }
-    
-    
-    @IBAction func openControllerB(_ sender : NSButton?)
-    {
-        let edge = NSRectEdge(rawValue: 0)
-
-        if self.controllerB.presented {
-            self.dismissViewController(self.controllerB)
-        } else {
-            self.presentViewController(self.controllerB, asPopoverRelativeTo: NSRect.init(),
-                                       of: self.preview, preferredEdge: edge!, behavior: NSPopoverBehavior.transient)
-        }
-
-    }
-    
     @IBAction func openControllerC(_ sender : NSButton?)
     {
         let edge = NSRectEdge(rawValue: 0)
         
-        if self.controllerC.presented {
-            self.dismissViewController(self.controllerC)
+        if self.toolsViewController.presented {
+            self.dismissViewController(self.toolsViewController)
         } else {
-            self.controllerC.rangeIndicaterView = self.rangeIndicaterView
-            self.controllerC.video_editer = self.video_editer
-            self.presentViewController(self.controllerC, asPopoverRelativeTo: NSRect.init(),
+            self.presentViewController(self.toolsViewController, asPopoverRelativeTo: NSRect.init(),
                                        of: self.preview, preferredEdge: edge!, behavior: NSPopoverBehavior.transient)
         }
 

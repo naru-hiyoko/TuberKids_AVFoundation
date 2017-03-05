@@ -13,63 +13,116 @@ enum AnimationStyle : Int {
     case `default`, fade, scale, rotation, spring
 }
  
- 
-class EffectData : NSObject, NSCoding {
+
+
+open class EffectData : NSObject, NSCoding {
     
-    var layer : CALayer
-    var normalizedFrame : CGRect?
-    var timeRange : CMTimeRange
-    var url : URL?
-    var type : String?
-    var trackId : CMPersistentTrackID?
-    var options : Dictionary<String, AnyObject>?
-    
-    private var _start : Double?
-    private var _end : Double?
+    public enum EffectType: Int {
+        case image, audio, video
+    }
     
     
-    init(layer : CALayer, normalizedFrame : CGRect?, timeRange : CMTimeRange, url : URL?,
-         type : String?, trackId : CMPersistentTrackID?, options : Dictionary<String, AnyObject>?) {
-        self.layer = layer
-        self.normalizedFrame = normalizedFrame
-        self.timeRange = timeRange
-       
+    static var effects: [EffectData] = []
+    
+    var url : URL! 
+    var rect: CGRect!
+    var timeRange: CMTimeRange!
+    
+    var layer : CALayer!
+    
+    var player: AVPlayer?
+    var audioPlayer: AVAudioPlayer?
+    var volume: Float! = 1.0
+
+    var type : EffectType!
+    
+    
+    init(url: URL, rect: CGRect, timeRange range: CMTimeRange) {
         self.url = url
-        self.type = type
-        self.trackId = trackId
-        self.options = options
+        self.rect = rect
+        self.timeRange = range
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        self.layer = aDecoder.decodeObject(forKey: "layer") as! CALayer
-        self.normalizedFrame = aDecoder.decodeObject(forKey: "normalizedFrame") as? CGRect        
-        
-        self._start = aDecoder.decodeObject(forKey: "_start") as? Double
-        self._end = aDecoder.decodeObject(forKey: "_end") as? Double        
-        let st = CMTimeMakeWithSeconds(self._start!, 600)
-        let ed = CMTimeMakeWithSeconds(self._end!, 600)
-        self.timeRange = CMTimeRangeMake(st, ed)
-        
-        self.url = aDecoder.decodeObject(forKey: "url") as? URL 
-        self.type = aDecoder.decodeObject(forKey: "type") as? String
-//        self.trackId = aDecoder.decodeObject(forKey: "trackId") as? CMPersistentTrackID
-        self.options = aDecoder.decodeObject(forKey: "options") as! Dictionary<String, AnyObject>?
-    }
-    
-    func encode(with aCoder: NSCoder) {
-        aCoder.encode(self.layer, forKey: "layer")
-        aCoder.encode(self.normalizedFrame, forKey: "normalizedFrame")
+    required public init?(coder aDecoder: NSCoder) {
+        self.url = aDecoder.decodeObject(forKey: "url") as! URL!
 
-        self._start = timeRange.start.seconds
-        self._end = timeRange.end.seconds
- 
-        aCoder.encode(self._start, forKey: "_start")
-        aCoder.encode(self._end, forKey: "_end")
-        aCoder.encode(self.url, forKey: "url")        
-        aCoder.encode(self.type, forKey: "type")        
-//        aCoder.encode(self.trackId, forKey: "trackId")        
-        aCoder.encode(self.options, forKey: "options")        
     }
     
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.url, forKey: "url")
+    }
+    
+    func show()
+    {
+        if self.player != nil 
+        {
+            self.player!.play()
+        }
+        
+        if self.audioPlayer != nil
+        {
+            self.audioPlayer!.play()
+            self.audioPlayer!.volume = volume
 
+        }
+        
+        self.layer.isHidden = false
+    }
+    
+    func pause()
+    {
+        if self.player != nil 
+        {
+            self.player!.pause()
+        }
+        
+        if self.audioPlayer != nil 
+        {
+            self.audioPlayer!.stop()
+        }
+        
+        
+    }
+    
+    func hidden()
+    {
+        if self.player != nil 
+        {
+            self.player!.pause()
+            self.player!.seek(to: kCMTimeZero)
+        }
+        
+        if self.audioPlayer != nil 
+        {
+            self.audioPlayer!.stop()
+            self.audioPlayer?.currentTime = 0.0                                    
+        }
+        
+        self.layer.isHidden = true
+        
+    }
+    
+    class func createWithImage(url: URL, rect: CGRect, timeRange range: CMTimeRange) -> EffectData
+    {
+        let datum = EffectData.init(url: url, rect: rect, timeRange: range)
+        datum.type = EffectType.image
+        return datum
+    }
+    
+    class func createWithAudio(url: URL, rect: CGRect, timeRange range: CMTimeRange, player: AVAudioPlayer, volume: Double = 1.0) -> EffectData
+    {
+        let datum = EffectData.init(url: url, rect: rect, timeRange: range)
+        datum.audioPlayer = player
+        datum.volume = Float(volume)
+        datum.type = EffectType.audio
+        return datum
+    }
+    
+    class func createWithVideo(url: URL, rect: CGRect, timeRange range: CMTimeRange, player: AVPlayer) -> EffectData
+    {
+        let datum = EffectData(url: url, rect: rect, timeRange: range)
+        datum.type = EffectType.video
+        datum.player = player
+        return datum
+    }
 }

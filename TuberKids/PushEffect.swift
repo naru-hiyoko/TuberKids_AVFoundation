@@ -16,93 +16,53 @@ extension AVPrevView
     /**
      region must be normalized to 0 ... 1.
      */
-    func pushImageEffect(resourcePath path : URL, duration : CMTimeRange, region : CGRect? = nil,
-                         options : Dictionary<String, AnyObject>?)
+    func pushImageEffect(resourcePath url : URL, timeRange range: CMTimeRange, region : CGRect)
     {
         
-        
         let layer = CALayer()
-        layer.contents = NSImage(contentsOf: path)
-        layer.frame = self.getSuitFrameSize(region)
+        layer.contents = NSImage(contentsOf: url)!.layerContents(forContentsScale: 1.0)
+        layer.frame = self.convertToLayer(region)
         
-        let datum : EffectData = EffectData(layer: layer, normalizedFrame: region, timeRange: duration, url: path,
-                                            type: AVMediaTypeImage, trackId: nil, options: options)
+        let datum = EffectData.createWithImage(url: url, rect: region, timeRange: range)
+        datum.layer = layer
         
-        self.effects.append(datum)
+        EffectData.effects.append(datum)
+
         self.effectParentLayer.addSublayer(layer)
         
-        self.layer?.insertSublayer(self.effectParentLayer, above: self.videoLayer)
-        self.layer?.insertSublayer(self.selectedRigion!, above: self.effectParentLayer)
-        
     }
+
     
-    func pushTextEffect(text : String, resourcePath path : URL, duration : CMTimeRange, region : CGRect? = nil,
-                        options: Dictionary<String, AnyObject>? = nil)
-    {
-        let layer = CALayer()
-        
-        var isVertical = false
-        if options != nil {
-            isVertical = options!["isVertical"] as! Bool
-        }
-        
-        let font : NSFont? = options!["font"] as? NSFont
-        
-        if isVertical {
-            let image = textImageVertical(text: text, font: font, texture: path)
-            layer.contents = image!        
-        } else {
-            let image = textImage(text: text, font: font, texture: path)
-            layer.contents = image!        
-        }
-        
-        layer.frame = self.getSuitFrameSize(region)
-        
-        let datum : EffectData = EffectData(layer: layer, normalizedFrame: region, timeRange: duration,
-                                            url: path, type: AVMediaTypeText, trackId: nil, options: options)
-        self.effects.append(datum)
-        self.effectParentLayer.addSublayer(layer)
-        
-        self.layer?.insertSublayer(self.effectParentLayer, above: self.videoLayer)
-        self.layer?.insertSublayer(self.selectedRigion!, above: self.effectParentLayer)
-        self.selectedRigion?.isHidden = true        
-    }
-    
-    func pushAudioEffect(resourcePath path : URL, duration : CMTimeRange, region : CGRect? = nil,
-                         trackId : CMPersistentTrackID, options: Dictionary<String, AnyObject>?)
+    func pushAudioEffect(resourcePath url: URL, timeRange range: CMTimeRange, region: CGRect, volume: Double = 1.0)
     {
         let layer = CALayer()
         let image = NSImage(named: "sound")
-        layer.contents = image!
-        layer.frame = self.getSuitFrameSize(region)
+        layer.contents = image!.layerContents(forContentsScale: 1.0)
+        layer.frame = self.convertToLayer(region)
+        let player = try! AVAudioPlayer.init(contentsOf: url)
         
-        let datum : EffectData = EffectData(layer: layer, normalizedFrame: region, timeRange: duration,
-                                            url: path, type: AVMediaTypeAudio, trackId: trackId, options: options)
-        self.effects.append(datum)
+        let datum = EffectData.createWithAudio(url: url, rect: region, timeRange: range, player: player, volume: volume)
+        datum.layer = layer
+        EffectData.effects.append(datum)
+        
         self.effectParentLayer.addSublayer(layer)
-        
-        self.layer?.insertSublayer(self.effectParentLayer, above: self.videoLayer)
-        //self.layer?.insertSublayer(self.selectedRigion!, above: self.effectParentLayer)
-        self.selectedRigion?.isHidden = true
         
     }
     
-    func pushVideoEffect(resourcePath path : URL, timeRange : CMTimeRange, region : CGRect? = nil)
+    func pushVideoEffect(resourcePath url : URL, timeRange : CMTimeRange, region : CGRect, volume: Double = 1.0)
     {
         
-        let player = AVPlayer(url: path)
+        let player = AVPlayer(url: url)
         let layer = AVPlayerLayer(player: player)
-        layer.frame = self.getSuitFrameSize(region)
+        layer.frame = self.convertToLayer(region)
+        let datum = EffectData.createWithVideo(url: url, rect: region, timeRange: timeRange, player: player)
+        datum.layer = layer
+        datum.volume = Float(volume)
+        EffectData.effects.append(datum)
         
-        let options : Dictionary<String, AnyObject> = [
-            "player" : player, 
-            ]
-        
-        let datum = EffectData(layer: layer, normalizedFrame: region, timeRange: timeRange, url: path, type: AVMediaTypeVideo, trackId: nil, options: options)
-        self.effects.append(datum)
         self.effectParentLayer.addSublayer(layer)
-        self.layer?.insertSublayer(self.effectParentLayer, above: self.videoLayer)        
-        self.selectedRigion?.isHidden = true        
+
+
         
     }
     
